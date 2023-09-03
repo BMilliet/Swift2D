@@ -3,89 +3,39 @@ import XCTest
 
 final class Swift2DTests: XCTestCase {
     
-    func test_create_matrix() throws {
-        let handler = MatrixHandler(columns: 10, rows: 10)
+    func test_create_canvas() throws {
+        let handler = CanvasHandler()
+        handler.createCanvas(columns: 10, rows: 10)
 
-        XCTAssertEqual(handler.matrix.count, 10)
+        XCTAssertEqual(handler.canvas.count, 10)
 
-        handler.matrix.forEach {
+        handler.canvas.forEach {
             XCTAssertEqual($0.count, 10)
         }
     }
 
-    func test_merge_matrix() throws {
-        let handler = MatrixHandler(columns: 10, rows: 10)
+    func test_merge_to_canvas() throws {
+        let controller = CanvasController(columns: 10, rows: 10, collisions: [])
 
-        let piece = [
+        let matrix1 = [
             [0,1,0],
             [1,1,0],
             [0,1,0],
         ]
 
-        handler.merge(piece, column: 2, row: 2)
+        let matrix2 = [
+            [1,1],
+            [1,1],
+        ]
 
-        var dog = Dog()
+        let shape1 = Shape(id: "dog", matrix: matrix1, column: 5, row: 5)
+        let shape2 = Shape(id: "cat", matrix: matrix2, column: 0, row: 0)
+
+        controller.addToCanvas(shape: shape1)
+        controller.addToCanvas(shape: shape2)
+
 
 
         XCTAssertTrue(true)
-    }
-}
-
-enum Move {
-    case left, right, up, down
-}
-
-struct Dog {
-    let handler = MatrixHandler(columns: 10, rows: 10)
-
-    let piece = [
-        [0,1,0],
-        [1,1,0],
-        [0,1,0],
-    ]
-
-    var horizontal = 0
-    var vertical = 0
-
-    func render() {
-        printAsTable(handler.matrix)
-    }
-
-    mutating func move(_ move: Move) {
-        
-        handler.remove(piece, column: horizontal, row: vertical)
-
-        var newHorizontal = horizontal
-        var newVertical = vertical
-
-        switch move {
-        case .left:
-            newHorizontal -= 1
-        case .right:
-            newHorizontal += 1
-        case .up:
-            newVertical -= 1
-        case .down:
-            newVertical += 1
-        }
-
-        let collision = CollisionHandler.collide(handler.matrix, piece, newHorizontal, newVertical)
-
-        if  collision != .none {
-            print("colision = \(collision)")
-            handler.merge(piece, column: horizontal, row: vertical)
-            printAsTable(handler.matrix)
-            return
-        }
-
-        horizontal = newHorizontal
-        vertical = newVertical
-
-        handler.merge(piece, column: horizontal, row: vertical)
-        printAsTable(handler.matrix)
-    }
-
-    func add() {
-        handler.merge(piece, column: 5, row: 5)
     }
 }

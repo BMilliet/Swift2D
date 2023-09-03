@@ -1,44 +1,55 @@
 import Foundation
 
-struct CollisionHandler {
+public enum CollisionTypes {
+    case anotherShape, leftWall, rightWall, floor, ceiling, none
+}
 
-    static func collide(_ mainMatrix: [[Int]], _ subMatrix: [[Int]], _ column: Int, _ row: Int) -> CollisionTypes {
-        let maxWidth = mainMatrix.first!.count
-        let maxHeight = mainMatrix.count
+final class CollisionHandler {
 
-        for (rowIndex, _row) in subMatrix.enumerated() {
+    private var validCollisions = [CollisionTypes: Bool]()
+
+    init() {}
+
+    func setCollisions(_ collisions: [CollisionTypes]) {
+        validCollisions = [CollisionTypes: Bool]()
+
+        collisions.forEach {
+            validCollisions[$0] = true
+        }
+    }
+
+    func collide(_ canvas: [[Int]], _ matrix: [[Int]], _ column: Int, _ row: Int) -> CollisionTypes {
+        let maxWidth = canvas.first!.count
+        let maxHeight = canvas.count
+
+        for (rowIndex, _row) in matrix.enumerated() {
             for (columnIndex, _column) in _row.enumerated() {
 
                 let newX = columnIndex + column
                 let newY = rowIndex + row
 
-                // collide with another shape
                 if newY > 0 && newY <= maxHeight - 1 && newX > -1 && newX <= maxWidth {
-                    let currentPoint = mainMatrix[newY][newX]
+                    let currentPoint = canvas[newY][newX]
 
-                    if currentPoint != 0 && _column != 0 {
+                    if currentPoint != 0 && _column != 0 && validCollisions[.anotherShape] != true {
                         return .anotherShape
                     }
                 }
 
-                // collide left wall
-                if newX < 0 && _column != 0 {
+                if newX < 0 && _column != 0 && validCollisions[.leftWall] != true {
                     return .leftWall
                 }
 
-                // collide right wall
-                if newX >= maxWidth && _column != 0 {
+                if newX >= maxWidth && _column != 0 && validCollisions[.rightWall] != true {
                     return .rightWall
                 }
 
-                // collide floor
-                if newY >= maxHeight && _column != 0 {
+                if newY >= maxHeight && _column != 0 && validCollisions[.floor] != true {
                     return .floor
                 }
 
-                // collide
-                if newY >= maxHeight && _column != 0 {
-                    return .floor
+                if newY < 0 && _column != 0 && validCollisions[.ceiling] != true {
+                    return .ceiling
                 }
             }
         }

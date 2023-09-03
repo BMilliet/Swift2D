@@ -1,8 +1,5 @@
 
-let SHAPE_DEFAULT_X: Int = 5
-let SHAPE_DEFAULT_Y: Int = -2
-
-func createEmptyMatrix(_ columns: Int, _ rows: Int) -> [[Int]] {
+func createEmptyCanvas(_ columns: Int, _ rows: Int) -> [[Int]] {
     var matrix = [[Int]]()
 
     for _ in 0..<rows {
