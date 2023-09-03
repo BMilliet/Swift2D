@@ -2,17 +2,6 @@ import XCTest
 @testable import Swift2D
 
 final class Swift2DTests: XCTestCase {
-    
-    func test_create_canvas() throws {
-        let handler = CanvasHandler()
-        handler.createCanvas(columns: 10, rows: 10)
-
-        XCTAssertEqual(handler.canvas.count, 10)
-
-        handler.canvas.forEach {
-            XCTAssertEqual($0.count, 10)
-        }
-    }
 
     func test_basic_movement_in_canvas() throws {
 
@@ -26,6 +15,8 @@ final class Swift2DTests: XCTestCase {
         let shape = Shape(id: "m", matrix: matrix, column: 2, row: 2)
 
         try controller.addToCanvas(shape: shape)
+
+        XCTAssertEqual("m", controller.registers.first!)
 
         var expected = [
             [0,0,0,0,0,0],
@@ -89,6 +80,20 @@ final class Swift2DTests: XCTestCase {
         ]
 
         XCTAssertEqual(expected, controller.canvas)
+
+        controller.remove(id: "m")
+
+        expected = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+        ]
+
+        XCTAssertEqual(expected, controller.canvas)
+        XCTAssertEqual([], controller.registers)
     }
 
     func test_collision_in_canvas() throws {

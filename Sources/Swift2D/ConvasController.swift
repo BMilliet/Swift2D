@@ -17,8 +17,22 @@ public final class CanvasController {
         canvasHandler.canvas
     }
 
+    var registers: [String] {
+        shapes.keys.map { $0 }
+    }
+
     func render() {
         printAsTable(canvasHandler.canvas)
+    }
+
+    func remove(id: String) {
+        guard let shape = shapes[id] else {
+            print("shape not found")
+            return
+        }
+
+        canvasHandler.remove(shape.matrix, column: shape.column, row: shape.row)
+        shapes.removeValue(forKey: id)
     }
 
 
