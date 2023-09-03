@@ -19,7 +19,7 @@ final class CollisionHandler {
     }
 
     func collide(_ canvas: [[Int]], _ matrix: [[Int]], _ column: Int, _ row: Int) -> CollisionTypes {
-        let maxWidth = canvas.first!.count
+        let maxWidth = canvas.first!.count - 1
         let maxHeight = canvas.count
 
         for (rowIndex, _row) in matrix.enumerated() {
@@ -31,24 +31,24 @@ final class CollisionHandler {
                 if newY > 0 && newY <= maxHeight - 1 && newX > -1 && newX <= maxWidth {
                     let currentPoint = canvas[newY][newX]
 
-                    if currentPoint != 0 && _column != 0 && validCollisions[.anotherShape] != true {
+                    if currentPoint != 0 && _column != 0 && validCollisions[.anotherShape] == true {
                         return .anotherShape
                     }
                 }
 
-                if newX < 0 && _column != 0 && validCollisions[.leftWall] != true {
+                if newX < 0 && _column != 0 && validCollisions[.leftWall] == true {
                     return .leftWall
                 }
 
-                if newX >= maxWidth && _column != 0 && validCollisions[.rightWall] != true {
+                if newX > maxWidth && _column != 0 && validCollisions[.rightWall] == true {
                     return .rightWall
                 }
 
-                if newY >= maxHeight && _column != 0 && validCollisions[.floor] != true {
+                if newY >= maxHeight && _column != 0 && validCollisions[.floor] == true {
                     return .floor
                 }
 
-                if newY < 0 && _column != 0 && validCollisions[.ceiling] != true {
+                if newY < 0 && _column != 0 && validCollisions[.ceiling] == true {
                     return .ceiling
                 }
             }

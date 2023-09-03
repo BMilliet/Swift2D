@@ -16,14 +16,20 @@ func createEmptyCanvas(_ columns: Int, _ rows: Int) -> [[Int]] {
 }
 
 func printAsTable(_ m: [[Int]]) {
+    print(stringMatrix(m))
+}
+
+func stringMatrix(_ m: [[Int]]) -> String {
     var line = ""
-    print("===========================")
+    var matrix = ""
 
     m.forEach { row in
         row.forEach {
             line += "\($0) "
         }
-        print(line)
+        matrix += "\(line)\n"
         line = ""
     }
+
+    return matrix
 }

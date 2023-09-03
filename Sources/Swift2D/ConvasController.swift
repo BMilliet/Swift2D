@@ -1,5 +1,3 @@
-// might need a shape to keep track location
-
 public enum Move {
     case left, right, up, down
 }
@@ -10,19 +8,23 @@ public final class CanvasController {
 
     private var shapes = [String: Shape]()
 
-    init(columns: Int, rows: Int, collisions: [CollisionTypes]) {
+    init(columns: Int, rows: Int, collisions: [CollisionTypes] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling]) {
         canvasHandler.createCanvas(columns: columns, rows: rows)
         collisionHandler.setCollisions(collisions)
+    }
+
+    var canvas: [[Int]] {
+        canvasHandler.canvas
     }
 
     func render() {
         printAsTable(canvasHandler.canvas)
     }
 
-    func move(_ move: Move, id: String) {
+
+    func move(_ move: Move, id: String) throws {
         guard var shape = shapes[id] else {
-            print("could not find shape with id \(id)")
-            return
+            throw Swift2DError.invalid(description: "could not find shape with id \(id)")
         }
 
         canvasHandler.remove(shape.matrix, column: shape.column, row: shape.row)
@@ -58,17 +60,15 @@ public final class CanvasController {
         printAsTable(canvasHandler.canvas)
     }
 
-    func addToCanvas(shape: Shape) {
+    func addToCanvas(shape: Shape) throws {
         if let _ = shapes[shape.id] {
-            print("shape already in canvas \(shape.id)")
-            return
+            throw Swift2DError.invalid(description: "shape already in canvas \(shape.id)")
         }
 
         let collision = collisionHandler.collide(canvasHandler.canvas, shape.matrix, shape.column, shape.row)
 
         if collision != .none {
-            print("invalid positions, cant add shape \(shape.id), collision \(collision)")
-            return
+            throw Swift2DError.collision(description: "invalid positions, cant add shape \(shape.id), collision \(collision)")
         }
 
         save(shape: shape)
