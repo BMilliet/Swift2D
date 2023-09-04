@@ -21,6 +21,10 @@ public final class CanvasController {
         shapes.keys.map { $0 }
     }
 
+    public var register: [String: Shape] {
+        shapes
+    }
+
     public func render() {
         printAsTable(canvasHandler.canvas)
     }
