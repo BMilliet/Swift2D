@@ -3,29 +3,29 @@ public enum Move {
 }
 
 public final class CanvasController {
-    let canvasHandler = CanvasHandler()
-    let collisionHandler = CollisionHandler()
+    private let canvasHandler = CanvasHandler()
+    private let collisionHandler = CollisionHandler()
 
     private var shapes = [String: Shape]()
 
-    init(columns: Int, rows: Int, collisions: [CollisionTypes] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling]) {
+    public init(columns: Int, rows: Int, collisions: [CollisionTypes] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling]) {
         canvasHandler.createCanvas(columns: columns, rows: rows)
         collisionHandler.setCollisions(collisions)
     }
 
-    var canvas: [[Int]] {
+    public var canvas: [[Int]] {
         canvasHandler.canvas
     }
 
-    var registers: [String] {
+    public var registers: [String] {
         shapes.keys.map { $0 }
     }
 
-    func render() {
+    public func render() {
         printAsTable(canvasHandler.canvas)
     }
 
-    func remove(id: String) {
+    public func remove(id: String) {
         guard let shape = shapes[id] else {
             print("shape not found")
             return
@@ -36,7 +36,7 @@ public final class CanvasController {
     }
 
 
-    func move(_ move: Move, id: String) throws {
+    public func move(_ move: Move, id: String) throws {
         guard var shape = shapes[id] else {
             throw Swift2DError.invalid(description: "could not find shape with id \(id)")
         }
@@ -74,7 +74,7 @@ public final class CanvasController {
         printAsTable(canvasHandler.canvas)
     }
 
-    func addToCanvas(shape: Shape) throws {
+    public func addToCanvas(shape: Shape) throws {
         if let _ = shapes[shape.id] {
             throw Swift2DError.invalid(description: "shape already in canvas \(shape.id)")
         }
