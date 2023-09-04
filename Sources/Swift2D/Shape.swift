@@ -1,6 +1,13 @@
 public struct Shape {
-    let id: String
-    var matrix: [[Int]]
-    var column: Int
-    var row: Int
+    public let id: String
+    public var matrix: [[Int]]
+    public var column: Int
+    public var row: Int
+
+    public init(id: String, matrix: [[Int]], column: Int, row: Int) {
+        self.id = id
+        self.matrix = matrix
+        self.column = column
+        self.row = row
+    }
 }
