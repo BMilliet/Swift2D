@@ -1,4 +1,4 @@
-public struct Shape {
+public final class Shape {
     public let id: String
     public var matrix: [[Int]]
     public var column: Int
