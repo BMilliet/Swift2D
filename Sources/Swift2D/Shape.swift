@@ -12,8 +12,8 @@ public final class Shape {
         self._row = row
     }
 
-    var column: Int { _column }
-    var row: Int { _row }
+    public var column: Int { _column }
+    public var row: Int { _row }
 
     func set(column: Int? = nil, row: Int? = nil) {
         if let column = column { _column = column }
