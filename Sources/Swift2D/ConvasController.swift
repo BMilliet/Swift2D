@@ -25,6 +25,10 @@ public final class CanvasController {
         printAsTable(canvasHandler.canvas)
     }
 
+    public func shape(_ id: String) -> Shape? {
+        return shapes[id]
+    }
+
     public func remove(id: String) {
         guard let shape = shapes[id] else {
             print("shape not found")
