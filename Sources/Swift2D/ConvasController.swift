@@ -45,7 +45,7 @@ public final class CanvasController {
 
 
     public func move(_ move: Move, id: String) throws {
-        guard let shape = shapes[id] else {
+        guard var shape = shapes[id] else {
             throw Swift2DError.invalid(description: "could not find shape with id \(id)")
         }
 
@@ -74,7 +74,9 @@ public final class CanvasController {
             return
         }
 
-        shape.set(column: newColumn, row: newRow)
+        shape.column = newColumn
+        shape.row = newRow
+
         save(shape: shape)
         canvasHandler.merge(shape.matrix, column: shape.column, row: shape.row)
         printAsTable(canvasHandler.canvas)
