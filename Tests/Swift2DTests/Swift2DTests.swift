@@ -140,7 +140,72 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(expected, controller.canvas)
         try controller.move(.right, id: "m")
         XCTAssertEqual(expected, controller.canvas)
+    }
 
-        XCTAssertTrue(true)
+    func test_collision_with_matrix() throws {
+
+        let controller = CanvasController(columns: 6, rows: 6)
+
+        let matrix1 = [
+            [1,1,1],
+            [0,1,0]
+        ]
+
+        let matrix2 = [
+            [0,0,1],
+            [1,1,1]
+        ]
+
+        let shape1 = Shape(id: "m", matrix: matrix1, column: 2, row: 0)
+        let shape2 = Shape(id: "n", matrix: matrix2, column: 2, row: 4)
+
+        try controller.addToCanvas(shape: shape1)
+        try controller.addToCanvas(shape: shape2)
+
+        var expected = [
+            [0,0,1,1,1,0],
+            [0,0,0,1,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,1,0],
+            [0,0,1,1,1,0],
+        ]
+
+        XCTAssertEqual(expected, controller.canvas)
+
+
+        try controller.move(.down, id: "m")
+        try controller.move(.down, id: "m")
+        try controller.move(.down, id: "m")
+
+        expected = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,1,1,1,0],
+            [0,0,0,1,1,0],
+            [0,0,1,1,1,0],
+        ]
+
+        XCTAssertEqual(expected, controller.canvas)
+        try controller.move(.down, id: "m")
+        XCTAssertEqual(expected, controller.canvas)
+        try controller.move(.right, id: "m")
+        XCTAssertEqual(expected, controller.canvas)
+
+        try controller.move(.left, id: "m")
+        try controller.move(.left, id: "m")
+        try controller.move(.down, id: "m")
+
+        expected = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [1,1,1,0,1,0],
+            [0,1,1,1,1,0],
+        ]
+
+        XCTAssertEqual(expected, controller.canvas)
     }
 }
