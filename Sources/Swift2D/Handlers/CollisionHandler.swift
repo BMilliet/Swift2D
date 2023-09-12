@@ -1,0 +1,56 @@
+import Foundation
+
+final class CollisionHandler {
+
+    private var validCollisions = [CollisionType: Bool]()
+
+    init() {}
+
+
+    func setCollisions(_ collisions: [CollisionType]) {
+        validCollisions = [CollisionType: Bool]()
+
+        collisions.forEach {
+            validCollisions[$0] = true
+        }
+    }
+
+
+    func collide(_ canvas: [[Int]], _ shape: Shape, _ column: Int, _ row: Int) -> CollisionData {
+        let maxWidth = canvas.first!.count - 1
+        let maxHeight = canvas.count
+
+        for (rowIndex, _row) in shape.matrix.enumerated() {
+            for (columnIndex, _column) in _row.enumerated() {
+
+                let newColumn = columnIndex + column
+                let newRow = rowIndex + row
+
+                if newRow > 0 && newRow <= maxHeight - 1 && newColumn > -1 && newColumn <= maxWidth {
+                    let currentPoint = canvas[newRow][newColumn]
+
+                    if currentPoint != 0 && _column != 0 && validCollisions[.anotherShape] == true {
+                        return CollisionData(type: .anotherShape, point: Point(column: newColumn, row: newRow))
+                    }
+                }
+
+                if newColumn < 0 && _column != 0 && validCollisions[.leftWall] == true {
+                    return CollisionData(type: .leftWall, point: Point(column: newColumn, row: newRow))
+                }
+
+                if newColumn > maxWidth && _column != 0 && validCollisions[.rightWall] == true {
+                    return CollisionData(type: .rightWall, point: Point(column: newColumn, row: newRow))
+                }
+
+                if newRow >= maxHeight && _column != 0 && validCollisions[.floor] == true {
+                    return CollisionData(type: .floor, point: Point(column: newColumn, row: newRow))
+                }
+
+                if newRow < 0 && _column != 0 && validCollisions[.ceiling] == true {
+                    return CollisionData(type: .ceiling, point: Point(column: newColumn, row: newRow))
+                }
+            }
+        }
+        return CollisionData(type: .none, point: Point(column: column, row: row))
+    }
+}

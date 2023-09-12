@@ -1,4 +1,3 @@
-
 func createEmptyCanvas(_ columns: Int, _ rows: Int) -> [[Int]] {
     var matrix = [[Int]]()
 
@@ -15,9 +14,11 @@ func createEmptyCanvas(_ columns: Int, _ rows: Int) -> [[Int]] {
     return matrix
 }
 
+
 func printAsTable(_ m: [[Int]]) {
     print(stringMatrix(m))
 }
+
 
 func stringMatrix(_ m: [[Int]]) -> String {
     var line = ""
