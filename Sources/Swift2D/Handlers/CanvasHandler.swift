@@ -15,13 +15,13 @@ public final class CanvasHandler {
     }()
 
 
-    func merge(_ shape: Shape, column: Int, row: Int) {
-        editCanvas(shape, column, row, true)
+    func merge(_ matrix: [[Int]], column: Int, row: Int) -> [Point] {
+        return editCanvas(matrix, column, row, true)
     }
 
 
-    func remove(_ shape: Shape, column: Int, row: Int) {
-        editCanvas(shape, column, row, false)
+    func remove(_ matrix: [[Int]], column: Int, row: Int) {
+        editCanvas(matrix, column, row, false)
     }
 
 
@@ -29,12 +29,13 @@ public final class CanvasHandler {
         canvas = createEmptyCanvas(columns, rows)
     }
 
-    
-    private func editCanvas(_ shape: Shape, _ column: Int, _ row: Int, _ add: Bool) {
-        var newCanvas = canvas
-        var matrixPoints = [Point]()
 
-        for (rowIndex, _row) in shape.matrix.enumerated() {
+    @discardableResult
+    private func editCanvas(_ matrix: [[Int]], _ column: Int, _ row: Int, _ add: Bool) -> [Point] {
+        var newCanvas = canvas
+        var occupiedPoints = [Point]()
+
+        for (rowIndex, _row) in matrix.enumerated() {
             for (columnIndex, _column) in _row.enumerated() {
                 if _column != 0 {
 
@@ -45,7 +46,7 @@ public final class CanvasHandler {
 
                         if add {
                             newCanvas[newRow][newColumn] = _column
-                            matrixPoints.append(Point(column: newColumn, row: newRow))
+                            occupiedPoints.append(Point(column: newColumn, row: newRow))
                         } else {
                             newCanvas[newRow][newColumn] = 0
                         }
@@ -54,8 +55,7 @@ public final class CanvasHandler {
             }
         }
 
-        shape.points = matrixPoints
         canvas = newCanvas
+        return occupiedPoints
     }
-
 }

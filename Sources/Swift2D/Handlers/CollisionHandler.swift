@@ -16,11 +16,11 @@ final class CollisionHandler {
     }
 
 
-    func collide(_ canvas: [[Int]], _ shape: Shape, _ column: Int, _ row: Int) -> CollisionData {
+    func collide(_ canvas: [[Int]], _ shapeMatrix: [[Int]], _ column: Int, _ row: Int) -> CollisionData {
         let maxWidth = canvas.first!.count - 1
         let maxHeight = canvas.count
 
-        for (rowIndex, _row) in shape.matrix.enumerated() {
+        for (rowIndex, _row) in shapeMatrix.enumerated() {
             for (columnIndex, _column) in _row.enumerated() {
 
                 let newColumn = columnIndex + column

@@ -62,7 +62,9 @@ public final class CanvasController {
             newRow += 1
         }
 
-        let collision = collisionHandler.collide(canvasHandler.canvas, shape, newColumn, newRow)
+        let collision = collisionHandler.collide(canvasHandler.canvas, shape.matrix, newColumn, newRow)
+
+        setCollision(shape: shape, collisionData: collision)
 
         if collision.type == .none {
             shape.column = newColumn
@@ -74,27 +76,36 @@ public final class CanvasController {
             return
         }
 
-
-        print("colision = \(collision)")
-        print("colision point = \(collision.point)")
-        canvasHandler.merge(shape, column: shape.column, row: shape.row)
-        printAsTable(canvasHandler.canvas)
+        merge(shape, column: shape.column, row: shape.row)
+    }
 
 
-        if collision.type == .anotherShape {
-            guard let id = points[collision.point] else { return }
+    private func setCollision(shape: Shape, collisionData: CollisionData) {
+        let previousCollidedShapeId = shape.lastCollidedShape
+
+        shape.lastCollision = collisionData.type
+
+        if collisionData.type == .anotherShape {
+            guard let id = points[collisionData.point] else { return }
             guard let collidedShape = shapes[id] else { return }
-            collidedShape.collisions = [.anotherShape]
+            collidedShape.lastCollidedShape = shape.id
+            collidedShape.lastCollision = .anotherShape
+            shape.lastCollidedShape = id
+        } else {
+            shape.lastCollidedShape = ""
+            guard let collidedShape = shapes[previousCollidedShapeId] else { return }
+            collidedShape.lastCollidedShape = ""
+            collidedShape.lastCollision = .none
         }
     }
 
-    
+
     public func addToCanvas(shape: Shape) throws {
         if let _ = shapes[shape.id] {
             throw Swift2DError.invalid(description: "shape already in canvas \(shape.id)")
         }
 
-        let collision = collisionHandler.collide(canvasHandler.canvas, shape, shape.column, shape.row)
+        let collision = collisionHandler.collide(canvasHandler.canvas, shape.matrix, shape.column, shape.row)
 
         if collision.type != .none {
             throw Swift2DError.collision(description: "invalid positions, cant add shape \(shape.id), collision \(collision)")
@@ -106,13 +117,14 @@ public final class CanvasController {
 
 
     func merge(_ shape: Shape, column: Int, row: Int) {
-        canvasHandler.merge(shape, column: column, row: row)
+        shape.points = canvasHandler.merge(shape.matrix, column: column, row: row)
         shape.points.forEach { points[$0] = shape.id }
     }
 
 
     func remove(_ shape: Shape, column: Int, row: Int) {
-        canvasHandler.remove(shape, column: column, row: row)
+        canvasHandler.remove(shape.matrix, column: column, row: row)
+        shape.points = []
         shape.points.forEach { points.removeValue(forKey: $0) }
     }
 

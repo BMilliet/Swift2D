@@ -4,7 +4,9 @@ public final class Shape {
     public var column: Int
     public var row: Int
     public var points: [Point] = []
-    public var collisions = [CollisionType]()
+
+    public var lastCollision: CollisionType = .none
+    public var lastCollidedShape: String = ""
 
     public init(id: String, matrix: [[Int]], column: Int, row: Int) {
         self.id = id
