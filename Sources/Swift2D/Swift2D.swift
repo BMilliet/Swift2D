@@ -1,16 +1,17 @@
-public final class CanvasController {
+public final class Swift2D {
 
     private let canvasHandler = CanvasHandler()
     private let collisionHandler = CollisionHandler()
-
+    private var logger = Logger()
 
     private var shapes = [String: Shape]()
     private var points = [Point: String]()
 
 
-    public init(columns: Int, rows: Int, collisions: [CollisionType] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling]) {
+    public init(columns: Int, rows: Int, collisions: [CollisionType] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling], log: Bool = false) {
         canvasHandler.createCanvas(columns: columns, rows: rows)
         collisionHandler.setCollisions(collisions)
+        logger.quiet = !log
     }
 
 
@@ -20,11 +21,6 @@ public final class CanvasController {
     public var getPoints: [Point: String] { points }
 
 
-    public func render() {
-        printAsTable(canvasHandler.canvas)
-    }
-
-
     public func shape(_ id: String) -> Shape? {
         return shapes[id]
     }
@@ -32,7 +28,7 @@ public final class CanvasController {
 
     public func remove(id: String) {
         guard let shape = shapes[id] else {
-            print("shape not found")
+            logger.log("shape not found, id: \(id)")
             return
         }
 
@@ -72,7 +68,7 @@ public final class CanvasController {
 
             save(shape: shape)
             merge(shape, column: shape.column, row: shape.row)
-            printAsTable(canvasHandler.canvas)
+            logger.log("\(stringMatrix(canvasHandler.canvas))")
             return
         }
 
