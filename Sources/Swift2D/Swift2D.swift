@@ -81,17 +81,28 @@ public final class Swift2D {
 
         shape.lastCollision = collisionData.type
 
-        if collisionData.type == .anotherShape {
+        if let collidedShape = shapes[previousCollidedShapeId] {
+            collidedShape.lastCollidedShape = ""
+            collidedShape.lastCollision = .none
+            collidedShape.lastCollidedPoint = nil
+        }
+
+        switch collisionData.type {
+        case .anotherShape:
             guard let id = points[collisionData.point] else { return }
             guard let collidedShape = shapes[id] else { return }
             collidedShape.lastCollidedShape = shape.id
             collidedShape.lastCollision = .anotherShape
+            collidedShape.lastCollidedPoint = collisionData.point
+            shape.lastCollidedPoint = collisionData.point
             shape.lastCollidedShape = id
-        } else {
+
+        case .none:
+            shape.lastCollidedPoint = nil
             shape.lastCollidedShape = ""
-            guard let collidedShape = shapes[previousCollidedShapeId] else { return }
-            collidedShape.lastCollidedShape = ""
-            collidedShape.lastCollision = .none
+        default:
+            shape.lastCollidedPoint = collisionData.point
+            shape.lastCollidedShape = ""
         }
     }
 

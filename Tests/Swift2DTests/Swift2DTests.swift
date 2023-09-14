@@ -261,6 +261,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.none, shapeN.lastCollision)
         XCTAssertTrue(shapeM.lastCollidedShape.isEmpty)
         XCTAssertTrue(shapeN.lastCollidedShape.isEmpty)
+        XCTAssertNil(shapeM.lastCollidedPoint)
+        XCTAssertNil(shapeN.lastCollidedPoint)
 
         try swift2d.move(.down, id: "m")
         XCTAssertEqual(.none, shapeM.lastCollision)
@@ -273,6 +275,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
         XCTAssertEqual("n", shapeM.lastCollidedShape)
         XCTAssertEqual("m", shapeN.lastCollidedShape)
+        XCTAssertEqual(Point(column: 4, row: 3), shapeN.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 4, row: 3), shapeM.lastCollidedPoint)
         XCTAssertEqual(expected, swift2d.canvas)
 
         try swift2d.move(.right, id: "m")
@@ -294,6 +298,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.none, shapeN.lastCollision)
         XCTAssertEqual("", shapeM.lastCollidedShape)
         XCTAssertEqual("", shapeN.lastCollidedShape)
+        XCTAssertNil(shapeM.lastCollidedPoint)
+        XCTAssertNil(shapeN.lastCollidedPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
 
@@ -303,6 +309,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.none, shapeN.lastCollision)
         XCTAssertEqual("", shapeM.lastCollidedShape)
         XCTAssertEqual("", shapeN.lastCollidedShape)
+        XCTAssertEqual(Point(column: -1, row: 3), shapeM.lastCollidedPoint)
+        XCTAssertNil(shapeN.lastCollidedPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
 
@@ -321,6 +329,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
         XCTAssertEqual("n", shapeM.lastCollidedShape)
         XCTAssertEqual("m", shapeN.lastCollidedShape)
+        XCTAssertEqual(Point(column: 4, row: 3), shapeN.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 4, row: 3), shapeM.lastCollidedPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
     }

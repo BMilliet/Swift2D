@@ -7,6 +7,7 @@ public final class Shape {
 
     public var lastCollision: CollisionType = .none
     public var lastCollidedShape: String = ""
+    public var lastCollidedPoint: Point? = nil
 
     public init(id: String, matrix: [[Int]], column: Int, row: Int) {
         self.id = id
