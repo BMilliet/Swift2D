@@ -275,8 +275,9 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
         XCTAssertEqual("n", shapeM.lastCollidedShape)
         XCTAssertEqual("m", shapeN.lastCollidedShape)
-        XCTAssertEqual(Point(column: 4, row: 3), shapeN.lastCollidedPoint)
         XCTAssertEqual(Point(column: 4, row: 3), shapeM.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 4, row: 3), shapeN.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 1, row: 0), shapeN.lastRelativeCollisionPoint)
         XCTAssertEqual(expected, swift2d.canvas)
 
         try swift2d.move(.right, id: "m")
@@ -300,6 +301,7 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual("", shapeN.lastCollidedShape)
         XCTAssertNil(shapeM.lastCollidedPoint)
         XCTAssertNil(shapeN.lastCollidedPoint)
+        XCTAssertNil(shapeN.lastRelativeCollisionPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
 
@@ -331,6 +333,28 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual("m", shapeN.lastCollidedShape)
         XCTAssertEqual(Point(column: 4, row: 3), shapeN.lastCollidedPoint)
         XCTAssertEqual(Point(column: 4, row: 3), shapeM.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 1, row: 0), shapeN.lastRelativeCollisionPoint)
+
+        XCTAssertEqual(expected, swift2d.canvas)
+
+        expected = [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,1,0],
+            [0,1,1,1,1,0],
+            [0,0,1,1,1,0],
+        ]
+        try swift2d.move(.down, id: "m")
+        try swift2d.move(.down, id: "m")
+
+        XCTAssertEqual(.anotherShape, shapeM.lastCollision)
+        XCTAssertEqual(.anotherShape, shapeN.lastCollision)
+        XCTAssertEqual("n", shapeM.lastCollidedShape)
+        XCTAssertEqual("m", shapeN.lastCollidedShape)
+        XCTAssertEqual(Point(column: 3, row: 5), shapeN.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 3, row: 5), shapeM.lastCollidedPoint)
+        XCTAssertEqual(Point(column: 0, row: 0), shapeN.lastRelativeCollisionPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
     }

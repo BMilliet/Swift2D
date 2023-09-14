@@ -85,6 +85,7 @@ public final class Swift2D {
             collidedShape.lastCollidedShape = ""
             collidedShape.lastCollision = .none
             collidedShape.lastCollidedPoint = nil
+            collidedShape.lastRelativeCollisionPoint = nil
         }
 
         switch collisionData.type {
@@ -94,6 +95,7 @@ public final class Swift2D {
             collidedShape.lastCollidedShape = shape.id
             collidedShape.lastCollision = .anotherShape
             collidedShape.lastCollidedPoint = collisionData.point
+            collidedShape.setRelativeCollision()
             shape.lastCollidedPoint = collisionData.point
             shape.lastCollidedShape = id
 
