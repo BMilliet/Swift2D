@@ -26,8 +26,10 @@ public final class Shape {
         var matrixPoints = [Point]()
 
         for (rowIndex, row) in matrix.enumerated() {
-            for (columnIndex, _) in row.enumerated() {
-                matrixPoints.append(Point(column: columnIndex, row: rowIndex))
+            for (columnIndex, e) in row.enumerated() {
+                if e != 0 {
+                    matrixPoints.append(Point(column: columnIndex, row: rowIndex))
+                }
             }
         }
 
@@ -47,10 +49,16 @@ public struct Point: Hashable, Comparable {
 
 
     public static func < (lhs: Point, rhs: Point) -> Bool {
-        if lhs.column == rhs.column {
-            return lhs.row < rhs.row
-        } else {
+//        if lhs.column == rhs.column {
+//            return lhs.row < rhs.row
+//        } else {
+//            return lhs.column < rhs.column
+//        }
+
+        if lhs.row == rhs.row {
             return lhs.column < rhs.column
+        } else {
+            return lhs.row < rhs.row
         }
     }
 }

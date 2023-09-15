@@ -26,6 +26,11 @@ public final class Swift2D {
     }
 
 
+    public func printCanvas() {
+        print(stringMatrix(canvas))
+    }
+
+
     public func remove(id: String) {
         guard let shape = shapes[id] else {
             logger.log("shape not found, id: \(id)")

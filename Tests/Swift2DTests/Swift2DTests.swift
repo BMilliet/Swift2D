@@ -354,8 +354,201 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual("m", shapeN.lastCollidedShape)
         XCTAssertEqual(Point(column: 3, row: 5), shapeN.lastCollidedPoint)
         XCTAssertEqual(Point(column: 3, row: 5), shapeM.lastCollidedPoint)
-        XCTAssertEqual(Point(column: 0, row: 0), shapeN.lastRelativeCollisionPoint)
+        XCTAssertEqual(Point(column: 0, row: 2), shapeN.lastRelativeCollisionPoint)
 
         XCTAssertEqual(expected, swift2d.canvas)
+    }
+
+    func test_relative_collision_point() throws {
+        let swift2d = Swift2D(columns: 10, rows: 10)
+
+        let matrix1 = [
+            [1,1,1,1,1,1],
+            [1,1,1,1,1,1],
+            [1,1,0,0,1,1],
+        ]
+
+        let matrix2 = [
+            [2],
+        ]
+
+        let shapeA = Shape(id: "a", matrix: matrix1, column: 2, row: 2)
+        let particle1 = Shape(id: "p1", matrix: matrix2, column: 0, row: 2)
+
+        try swift2d.addToCanvas(shape: shapeA)
+        try swift2d.addToCanvas(shape: particle1)
+
+        var expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [2,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.none, shapeA.lastCollision)
+        XCTAssertEqual("", shapeA.lastCollidedShape)
+        XCTAssertNil(shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.right, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,2,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 0, row: 0), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.down, id: "p1")
+        try swift2d.move(.right, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,2,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 0, row: 1), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.down, id: "p1")
+        try swift2d.move(.right, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,2,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 0, row: 2), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.down, id: "p1")
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.up, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,2,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 1, row: 2), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.up, id: "p1")
+        try swift2d.move(.up, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,2,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 2, row: 1), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.down, id: "p1")
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.up, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,2,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 5, row: 2), shapeA.lastRelativeCollisionPoint)
+
+
+        try swift2d.move(.right, id: "p1")
+        try swift2d.move(.up, id: "p1")
+        try swift2d.move(.up, id: "p1")
+        try swift2d.move(.up, id: "p1")
+        try swift2d.move(.left, id: "p1")
+
+        expected = [
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,1,1,1,1,1,1,2,0],
+            [0,0,1,1,1,1,1,1,0,0],
+            [0,0,1,1,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]
+        XCTAssertEqual(expected, swift2d.canvas)
+        XCTAssertEqual(.anotherShape, shapeA.lastCollision)
+        XCTAssertEqual("p1", shapeA.lastCollidedShape)
+        XCTAssertEqual(Point(column: 5, row: 0), shapeA.lastRelativeCollisionPoint)
     }
 }
