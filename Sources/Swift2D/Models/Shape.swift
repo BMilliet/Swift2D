@@ -44,17 +44,11 @@ public final class Shape {
 
 
 public struct Point: Hashable, Comparable {
-    let column: Int
-    let row: Int
+    public let column: Int
+    public let row: Int
 
 
     public static func < (lhs: Point, rhs: Point) -> Bool {
-//        if lhs.column == rhs.column {
-//            return lhs.row < rhs.row
-//        } else {
-//            return lhs.column < rhs.column
-//        }
-
         if lhs.row == rhs.row {
             return lhs.column < rhs.column
         } else {
