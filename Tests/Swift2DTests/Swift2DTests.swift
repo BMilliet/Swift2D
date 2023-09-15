@@ -12,7 +12,7 @@ final class Swift2DTests: XCTestCase {
             [1,1],
         ]
 
-        let shape = Shape(id: "m", matrix: matrix, column: 2, row: 2)
+        let shape = Swift2DShape(id: "m", matrix: matrix, column: 2, row: 2)
 
         try swift2d.addToCanvas(shape: shape)
 
@@ -94,7 +94,7 @@ final class Swift2DTests: XCTestCase {
             [1],
         ]
 
-        let shape = Shape(id: "m", matrix: matrix, column: 0, row: 0)
+        let shape = Swift2DShape(id: "m", matrix: matrix, column: 0, row: 0)
 
         try swift2d.addToCanvas(shape: shape)
 
@@ -141,7 +141,7 @@ final class Swift2DTests: XCTestCase {
             [1,1],
         ]
 
-        let shape = Shape(id: "m", matrix: matrix, column: 0, row: 0)
+        let shape = Swift2DShape(id: "m", matrix: matrix, column: 0, row: 0)
 
         try swift2d.addToCanvas(shape: shape)
 
@@ -229,8 +229,8 @@ final class Swift2DTests: XCTestCase {
             [1,1]
         ]
 
-        let shapeM = Shape(id: "m", matrix: matrix1, column: 2, row: 0)
-        let shapeN = Shape(id: "n", matrix: matrix2, column: 3, row: 3)
+        let shapeM = Swift2DShape(id: "m", matrix: matrix1, column: 2, row: 0)
+        let shapeN = Swift2DShape(id: "n", matrix: matrix2, column: 3, row: 3)
 
         try swift2d.addToCanvas(shape: shapeM)
         try swift2d.addToCanvas(shape: shapeN)
@@ -372,8 +372,8 @@ final class Swift2DTests: XCTestCase {
             [2],
         ]
 
-        let shapeA = Shape(id: "a", matrix: matrix1, column: 2, row: 2)
-        let particle1 = Shape(id: "p1", matrix: matrix2, column: 0, row: 2)
+        let shapeA = Swift2DShape(id: "a", matrix: matrix1, column: 2, row: 2)
+        let particle1 = Swift2DShape(id: "p1", matrix: matrix2, column: 0, row: 2)
 
         try swift2d.addToCanvas(shape: shapeA)
         try swift2d.addToCanvas(shape: particle1)

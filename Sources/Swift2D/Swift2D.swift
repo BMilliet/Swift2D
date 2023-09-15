@@ -4,7 +4,7 @@ public final class Swift2D {
     private let collisionHandler = CollisionHandler()
     private var logger = Logger()
 
-    private var shapes = [String: Shape]()
+    private var shapes = [String: Swift2DShape]()
     private var points = [Point: String]()
 
 
@@ -17,11 +17,11 @@ public final class Swift2D {
 
     public var canvas: [[Int]] { canvasHandler.canvas }
     public var getShapeKeys: [String] { shapes.keys.map { $0 } }
-    public var getShapes: [String: Shape] { shapes }
+    public var getShapes: [String: Swift2DShape] { shapes }
     public var getPoints: [Point: String] { points }
 
 
-    public func shape(_ id: String) -> Shape? {
+    public func shape(_ id: String) -> Swift2DShape? {
         return shapes[id]
     }
 
@@ -81,7 +81,7 @@ public final class Swift2D {
     }
 
 
-    private func setCollision(shape: Shape, collisionData: CollisionData) {
+    private func setCollision(shape: Swift2DShape, collisionData: CollisionData) {
         let previousCollidedShapeId = shape.lastCollidedShape
 
         shape.lastCollision = collisionData.type
@@ -114,7 +114,7 @@ public final class Swift2D {
     }
 
 
-    public func addToCanvas(shape: Shape) throws {
+    public func addToCanvas(shape: Swift2DShape) throws {
         if let _ = shapes[shape.id] {
             throw Swift2DError.invalid(description: "shape already in canvas \(shape.id)")
         }
@@ -130,20 +130,20 @@ public final class Swift2D {
     }
 
 
-    func merge(_ shape: Shape, column: Int, row: Int) {
+    func merge(_ shape: Swift2DShape, column: Int, row: Int) {
         shape.points = canvasHandler.merge(shape.matrix, column: column, row: row)
         shape.points.forEach { points[$0] = shape.id }
     }
 
 
-    func remove(_ shape: Shape, column: Int, row: Int) {
+    func remove(_ shape: Swift2DShape, column: Int, row: Int) {
         canvasHandler.remove(shape.matrix, column: column, row: row)
         shape.points = []
         shape.points.forEach { points.removeValue(forKey: $0) }
     }
 
 
-    private func save(shape: Shape) {
+    private func save(shape: Swift2DShape) {
         shapes[shape.id] = shape
     }
 }

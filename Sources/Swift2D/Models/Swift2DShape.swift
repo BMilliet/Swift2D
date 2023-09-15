@@ -1,4 +1,4 @@
-public final class Shape {
+public final class Swift2DShape {
     public let id: String
     public var matrix: [[Int]]
     public var column: Int
