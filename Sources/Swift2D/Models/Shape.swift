@@ -20,6 +20,11 @@ public final class Shape {
     }
 
 
+    public func printMatrix() {
+        print(stringMatrix(matrix))
+    }
+
+
     func setRelativeCollision() {
 
         let sortedPoints = points.sorted()
