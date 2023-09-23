@@ -134,14 +134,14 @@ final class Swift2DTests: XCTestCase {
 
     func test_disabled_collision_in_canvas() throws {
 
-        let swift2d = Swift2D(columns: 3, rows: 3, collisions: [])
+        let swift2d = Swift2D(columns: 3, rows: 3)
 
         let matrix = [
             [1,1],
             [1,1],
         ]
 
-        let shape = Swift2DShape(id: "m", matrix: matrix, column: 0, row: 0)
+        let shape = Swift2DShape(id: "m", matrix: matrix, column: 0, row: 0, collisions: [])
 
         try swift2d.addToCanvas(shape: shape)
 

@@ -1,3 +1,3 @@
 public enum CollisionType {
-    case anotherShape, leftWall, rightWall, floor, ceiling, none
+    case anotherShape, leftWall, rightWall, floor, ceiling, all, none
 }

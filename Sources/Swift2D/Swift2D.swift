@@ -8,9 +8,8 @@ public final class Swift2D {
     private var points = [Point: String]()
 
 
-    public init(columns: Int, rows: Int, collisions: [CollisionType] = [.anotherShape, .leftWall, .rightWall, .floor, .ceiling], log: Bool = false) {
+    public init(columns: Int, rows: Int, log: Bool = false) {
         canvasHandler.createCanvas(columns: columns, rows: rows)
-        collisionHandler.setCollisions(collisions)
         logger.quiet = !log
     }
 
@@ -63,7 +62,7 @@ public final class Swift2D {
             newRow += 1
         }
 
-        let collision = collisionHandler.collide(canvasHandler.canvas, shape.matrix, newColumn, newRow)
+        let collision = collisionHandler.collide(canvasHandler.canvas, shape, newColumn, newRow)
 
         setCollision(shape: shape, collisionData: collision)
 
@@ -119,7 +118,7 @@ public final class Swift2D {
             throw Swift2DError.invalid(description: "shape already in canvas \(shape.id)")
         }
 
-        let collision = collisionHandler.collide(canvasHandler.canvas, shape.matrix, shape.column, shape.row)
+        let collision = collisionHandler.collide(canvasHandler.canvas, shape, shape.column, shape.row)
 
         if collision.type != .none {
             throw Swift2DError.collision(description: "invalid positions, cant add shape \(shape.id), collision \(collision)")

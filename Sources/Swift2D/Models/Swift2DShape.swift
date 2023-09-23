@@ -11,17 +11,27 @@ public final class Swift2DShape {
     public var lastCollidedPoint: Point? = nil
     public var lastRelativeCollisionPoint: Point? = nil
 
+    private var validCollisions = [CollisionType: Bool]()
 
-    public init(id: String, matrix: [[Int]], column: Int, row: Int) {
+
+    public init(id: String, matrix: [[Int]], column: Int, row: Int, collisions: [CollisionType] = CollisionFactory.all()) {
         self.id = id
         self.matrix = matrix
         self.column = column
         self.row = row
+
+        collisions.forEach {
+            self.validCollisions[$0] = true
+        }
     }
 
 
     public func printMatrix() {
         print(stringMatrix(matrix))
+    }
+
+    public func getValidCollisions() -> [CollisionType: Bool] {
+        return validCollisions
     }
 
 
@@ -47,17 +57,3 @@ public final class Swift2DShape {
     }
 }
 
-
-public struct Point: Hashable, Comparable {
-    public let column: Int
-    public let row: Int
-
-
-    public static func < (lhs: Point, rhs: Point) -> Bool {
-        if lhs.row == rhs.row {
-            return lhs.column < rhs.column
-        } else {
-            return lhs.row < rhs.row
-        }
-    }
-}

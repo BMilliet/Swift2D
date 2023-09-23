@@ -2,23 +2,15 @@ import Foundation
 
 final class CollisionHandler {
 
-    private var validCollisions = [CollisionType: Bool]()
 
     init() {}
 
 
-    func setCollisions(_ collisions: [CollisionType]) {
-        validCollisions = [CollisionType: Bool]()
-
-        collisions.forEach {
-            validCollisions[$0] = true
-        }
-    }
-
-
-    func collide(_ canvas: [[Int]], _ shapeMatrix: [[Int]], _ column: Int, _ row: Int) -> CollisionData {
+    func collide(_ canvas: [[Int]], _ shape: Swift2DShape, _ column: Int, _ row: Int) -> CollisionData {
         let maxWidth = canvas.first!.count - 1
         let maxHeight = canvas.count
+        let shapeMatrix = shape.matrix
+        let validCollisions = shape.getValidCollisions()
 
         for (rowIndex, _row) in shapeMatrix.enumerated() {
             for (columnIndex, _column) in _row.enumerated() {
