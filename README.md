@@ -1,6 +1,6 @@
 # Swift2D (2D arrays)
 
-This package focus on handleling 2D arrays in a friendly way.
+This package focus on handleling 2D arrays in a friendly way, creating an engine for 2D games.
 With this package is possible to create a main grid (canvas) and move inner grids inside.
 
 ### Usage
