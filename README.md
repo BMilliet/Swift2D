@@ -1,7 +1,8 @@
 # Swift2D (2D arrays)
 
-This package focus on handleling 2D arrays in a friendly way, creating an engine for 2D games.
+This package focus on handleling 2D arrays in a friendly way.
 With this package is possible to create a main grid (canvas) and move inner grids inside.
+Usefull for creating 2D games.
 
 ### Usage
 
@@ -48,4 +49,35 @@ swift2d.getShapeKeys
 
 // and we can remove the shape:
 swift2d.remove(id: "sample")
+```
+
+### Install
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "YourProject",
+    platforms: [.iOS(.v15)],
+    products: [
+        // Products define the executables and libraries a package produces, making them visible to other packages.
+        .library(
+            name: "YourProject",
+            targets: ["YourProject"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/BMilliet/Swift2D", branch: "main"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .target(
+            name: "YourProject",
+            dependencies: ["Swift2D"]
+        ),
+        .testTarget(
+            name: "YourProjectTests",
+            dependencies: ["YourProject"]),
+    ]
+)
 ```
