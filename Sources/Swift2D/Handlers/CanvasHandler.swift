@@ -30,6 +30,29 @@ public final class CanvasHandler {
     }
 
 
+    func getCanvasSlice(with resolution: Resolution) -> [[Int]] {
+        let minRow = resolution.topLeft.row
+        let maxRow = resolution.bottomRight.row
+        let minCol = resolution.topLeft.column
+        let maxCol = resolution.bottomRight.column
+
+        var subCanvas = [[Int]]()
+        var cut = [[Int]]()
+
+        for (i, r) in canvas.enumerated() {
+            if i < minRow || i > maxRow { continue }
+            subCanvas.append(r)
+        }
+
+        for (i, _) in subCanvas.enumerated() {
+            let n = Array(subCanvas[i][minCol...maxCol])
+            cut.append(n)
+        }
+
+        return cut
+    }
+
+
     @discardableResult
     private func editCanvas(_ matrix: [[Int]], _ column: Int, _ row: Int, _ add: Bool) -> [Point] {
         var newCanvas = canvas

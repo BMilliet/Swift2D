@@ -30,6 +30,11 @@ public final class Swift2D {
     }
 
 
+    public func getCanvasSlice(with resolution: Resolution) -> [[Int]] {
+        return canvasHandler.getCanvasSlice(with: resolution)
+    }
+
+
     public func remove(id: String) {
         guard let shape = shapes[id] else {
             logger.log("shape not found, id: \(id)")

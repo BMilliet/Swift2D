@@ -551,4 +551,69 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual("p1", shapeA.lastCollidedShape)
         XCTAssertEqual(Point(column: 5, row: 0), shapeA.lastRelativeCollisionPoint)
     }
+
+
+    func test_canvas_cut() throws {
+
+        let swift2d = Swift2D(columns: 6, rows: 6)
+
+        let matrix1 = [
+            [1,1,1],
+            [0,1,0]
+        ]
+
+        let matrix2 = [
+            [0,1],
+            [0,1],
+            [1,1]
+        ]
+
+        let shapeM = Swift2DShape(id: "m", matrix: matrix1, column: 2, row: 0)
+        let shapeN = Swift2DShape(id: "n", matrix: matrix2, column: 3, row: 3)
+
+        try swift2d.addToCanvas(shape: shapeM)
+        try swift2d.addToCanvas(shape: shapeN)
+
+        var expected = [
+            [0,0,1,1,1,0],
+            [0,0,0,1,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,1,0],
+            [0,0,0,0,1,0],
+            [0,0,0,1,1,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.canvas)
+
+        var cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2)))
+
+        expected = [
+            [0,0,1],
+            [0,0,0],
+        ]
+
+        XCTAssertEqual(expected, cut)
+
+        cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5)))
+
+        expected = [
+            [0,0,1,0],
+            [0,0,0,0],
+            [0,0,0,1],
+            [0,0,0,1],
+            [0,0,1,1],
+        ]
+
+        XCTAssertEqual(expected, cut)
+
+        cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4)))
+
+        expected = [
+            [0,0,0],
+            [0,0,1],
+            [0,0,1],
+        ]
+
+        XCTAssertEqual(expected, cut)
+    }
 }
