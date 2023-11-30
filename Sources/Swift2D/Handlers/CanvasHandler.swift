@@ -30,7 +30,7 @@ public final class CanvasHandler {
     }
 
 
-    func getCanvasSlice(with resolution: Resolution) -> [[Int]] {
+    func getCanvasSlice(with resolution: Resolution) -> [[Int]]? {
         let minRow = resolution.topLeft.row
         let maxRow = resolution.bottomRight.row
         let minCol = resolution.topLeft.column
@@ -38,6 +38,10 @@ public final class CanvasHandler {
 
         var subCanvas = [[Int]]()
         var cut = [[Int]]()
+
+        if minCol <= 0 || maxCol >= canvas[0].count {
+            return nil
+        }
 
         for (i, r) in canvas.enumerated() {
             if i < minRow || i > maxRow { continue }

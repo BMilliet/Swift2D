@@ -585,7 +585,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.canvas)
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2), maxRow: 5, maxCol: 5))
 
         expected = [
             [0,0,1],
@@ -594,7 +594,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5), maxRow: 5, maxCol: 5))
 
         expected = [
             [0,0,1,0],
@@ -606,7 +606,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4), maxRow: 5, maxCol: 5))
 
         expected = [
             [0,0,0],
@@ -644,6 +644,9 @@ final class Swift2DTests: XCTestCase {
             [1,1,0],
         ]
 
+        XCTAssertNil(swift2d.cameraFrame())
+
+        swift2d.moveCamera(.left)
         XCTAssertEqual(expected, swift2d.cameraFrame())
     }
 }
