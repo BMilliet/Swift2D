@@ -1,8 +1,8 @@
 public struct Resolution {
-    public let topLeft:  Point
-    public let bottomRight: Point
+    var topLeft:  Point
+    var bottomRight: Point
 
-    public init(topLeft: Point, bottomRight: Point) {
+    init(topLeft: Point, bottomRight: Point) {
         self.topLeft = topLeft
         self.bottomRight = bottomRight
     }

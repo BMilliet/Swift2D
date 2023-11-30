@@ -2,8 +2,15 @@ import Foundation
 
 
 public struct Point: Hashable, Comparable {
-    public let column: Int
-    public let row: Int
+
+    public var column: Int
+    public var row: Int
+
+
+    public init(column: Int, row: Int) {
+        self.column = column
+        self.row = row
+    }
 
 
     public static func < (lhs: Point, rhs: Point) -> Bool {

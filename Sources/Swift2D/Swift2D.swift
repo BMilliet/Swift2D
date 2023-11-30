@@ -6,7 +6,7 @@ public final class Swift2D {
 
     private var shapes = [String: Swift2DShape]()
     private var points = [Point: String]()
-
+    private var camera: Camera?
 
     public init(columns: Int, rows: Int, log: Bool = false) {
         canvasHandler.createCanvas(columns: columns, rows: rows)
@@ -18,6 +18,8 @@ public final class Swift2D {
     public var getShapeKeys: [String] { shapes.keys.map { $0 } }
     public var getShapes: [String: Swift2DShape] { shapes }
     public var getPoints: [Point: String] { points }
+    public var getCamera: Camera? { camera }
+    public func setCamera(_ _camera: Camera) { camera = _camera }
 
 
     public func shape(_ id: String) -> Swift2DShape? {
@@ -26,12 +28,23 @@ public final class Swift2D {
 
 
     public func printCanvas() {
-        print(stringMatrix(canvas))
+        printMatrix(canvas)
     }
 
 
-    public func getCanvasSlice(with resolution: Resolution) -> [[Int]] {
-        return canvasHandler.getCanvasSlice(with: resolution)
+    public func printMatrix(_ a: [[Int]]) {
+        print(stringMatrix(a))
+    }
+
+
+    public func moveCamera(_ move: Move) {
+        camera?.move(move)
+    }
+
+    
+    public func cameraFrame() -> [[Int]]? {
+        guard let camera = camera else { return nil }
+        return canvasHandler.getCanvasSlice(with: camera.getResolution)
     }
 
 

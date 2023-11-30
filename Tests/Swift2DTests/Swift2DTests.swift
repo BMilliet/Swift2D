@@ -585,16 +585,16 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.canvas)
 
-        var cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2)))
 
         expected = [
             [0,0,1],
             [0,0,0],
         ]
 
-        XCTAssertEqual(expected, cut)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5)))
 
         expected = [
             [0,0,1,0],
@@ -604,9 +604,9 @@ final class Swift2DTests: XCTestCase {
             [0,0,1,1],
         ]
 
-        XCTAssertEqual(expected, cut)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        cut = swift2d.getCanvasSlice(with: .init(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4)))
+        swift2d.setCamera(Camera(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4)))
 
         expected = [
             [0,0,0],
@@ -614,6 +614,36 @@ final class Swift2DTests: XCTestCase {
             [0,0,1],
         ]
 
-        XCTAssertEqual(expected, cut)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        swift2d.moveCamera(.down)
+
+        expected = [
+            [0,0,1],
+            [0,0,1],
+            [0,1,1],
+        ]
+
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        swift2d.moveCamera(.right)
+
+        expected = [
+            [0,1,0],
+            [0,1,0],
+            [1,1,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        swift2d.moveCamera(.right)
+
+        expected = [
+            [0,1,0],
+            [0,1,0],
+            [1,1,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.cameraFrame())
     }
 }
