@@ -644,7 +644,7 @@ final class Swift2DTests: XCTestCase {
             [1,1,0],
         ]
 
-        XCTAssertNil(swift2d.cameraFrame())
+        XCTAssertEqual(expected, swift2d.cameraFrame())
 
         swift2d.moveCamera(.left)
         XCTAssertEqual(expected, swift2d.cameraFrame())
