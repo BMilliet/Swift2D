@@ -3,6 +3,9 @@ public class Camera {
     private let maxRow: Int
     private let maxCol: Int
 
+//    private var staticRow: Int = 0
+//    private var staticCol: Int = 0
+
     public var getResolution: Resolution { resolution }
 
     public init(topLeft: Point, bottomRight: Point, maxRow: Int, maxCol: Int) {
@@ -11,13 +14,19 @@ public class Camera {
         self.maxRow = maxRow
     }
 
+
+//    public func setStaticFrame(row: Int, col: Int) {
+//        staticCol = col
+//        staticRow = row
+//    }
+
     func move(_ move: Move) {
         var topL    = resolution.topLeft
         var bottomR = resolution.bottomRight
 
         switch move {
         case .left:
-            if topL.column >= 0 { return }
+            if topL.column <= 0 { return }
             topL.column -= 1
             bottomR.column -= 1
         case .right:

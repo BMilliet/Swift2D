@@ -39,7 +39,7 @@ public final class CanvasHandler {
         var subCanvas = [[Int]]()
         var cut = [[Int]]()
 
-        if minCol <= 0 || maxCol >= canvas[0].count {
+        if minCol < 0 || maxCol >= canvas[0].count {
             return nil
         }
 

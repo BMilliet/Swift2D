@@ -568,19 +568,26 @@ final class Swift2DTests: XCTestCase {
             [1,1]
         ]
 
+        let matrix3 = [
+            [1],
+            [1]
+        ]
+
         let shapeM = Swift2DShape(id: "m", matrix: matrix1, column: 2, row: 0)
         let shapeN = Swift2DShape(id: "n", matrix: matrix2, column: 3, row: 3)
+        let shapeO = Swift2DShape(id: "o", matrix: matrix3, column: 0, row: 4)
 
         try swift2d.addToCanvas(shape: shapeM)
         try swift2d.addToCanvas(shape: shapeN)
+        try swift2d.addToCanvas(shape: shapeO)
 
         var expected = [
             [0,0,1,1,1,0],
             [0,0,0,1,0,0],
             [0,0,0,0,0,0],
             [0,0,0,0,1,0],
-            [0,0,0,0,1,0],
-            [0,0,0,1,1,0],
+            [1,0,0,0,1,0],
+            [1,0,0,1,1,0],
         ]
 
         XCTAssertEqual(expected, swift2d.canvas)
@@ -646,7 +653,46 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
+        expected = [
+            [0,0,1],
+            [0,0,1],
+            [0,1,1],
+        ]
+
         swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        expected = [
+            [0,0,0],
+            [0,0,0],
+            [0,0,1],
+        ]
+
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        expected = [
+            [0,0,0],
+            [1,0,0],
+            [1,0,0],
+        ]
+
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        expected = [
+            [0,0,1],
+            [0,0,0],
+            [0,0,0],
+        ]
+
+        swift2d.moveCamera(.up)
+        swift2d.moveCamera(.up)
+        swift2d.moveCamera(.up)
+        swift2d.moveCamera(.up)
         XCTAssertEqual(expected, swift2d.cameraFrame())
     }
 }
