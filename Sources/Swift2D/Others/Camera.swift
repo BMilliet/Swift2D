@@ -3,8 +3,10 @@ public class Camera {
     private let maxRow: Int
     private let maxCol: Int
 
-//    private var staticRow: Int = 0
-//    private var staticCol: Int = 0
+    private var offsetLimitRow: Int = 0
+    private var offsetLimitCol: Int = 0
+    private var offsetRow: Int = 0
+    private var offsetCol: Int = 0
 
     public var getResolution: Resolution { resolution }
 
@@ -15,10 +17,13 @@ public class Camera {
     }
 
 
-//    public func setStaticFrame(row: Int, col: Int) {
-//        staticCol = col
-//        staticRow = row
-//    }
+    public func setOffsetLimits(row: Int, col: Int) {
+        offsetLimitCol = col
+        offsetLimitRow = row
+        offsetCol = offsetLimitCol
+        offsetRow = offsetLimitRow
+    }
+
 
     func move(_ move: Move) {
         var topL    = resolution.topLeft
@@ -26,11 +31,31 @@ public class Camera {
 
         switch move {
         case .left:
-            if topL.column <= 0 { return }
+            if topL.column <= 0 {
+                if abs(offsetCol) <= offsetLimitCol {
+                    offsetCol -= 1
+                }
+                return
+            }
+
+            if offsetCol < offsetLimitCol {
+                offsetCol += 1
+                return
+            }
+
             topL.column -= 1
             bottomR.column -= 1
         case .right:
-            if bottomR.column >= maxCol { return }
+            if bottomR.column >= maxCol {
+                if abs(offsetCol) >= offsetLimitCol {
+                    offsetCol -= 1
+                }
+                return
+            }
+            if offsetCol < offsetLimitCol {
+                offsetCol += 1
+                return
+            }
             topL.column += 1
             bottomR.column += 1
         case .up:

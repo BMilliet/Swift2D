@@ -643,6 +643,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
+        // +1 offset right
         swift2d.moveCamera(.right)
 
         expected = [
@@ -653,12 +654,32 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
+        // +2 offset right
+        swift2d.moveCamera(.right)
+
+        expected = [
+            [0,1,0],
+            [0,1,0],
+            [1,1,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // 1 off-camera
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // 0 off-camera
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
         expected = [
             [0,0,1],
             [0,0,1],
             [0,1,1],
         ]
 
+        // 0 off-camera
         swift2d.moveCamera(.left)
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
