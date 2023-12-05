@@ -819,5 +819,138 @@ final class Swift2DTests: XCTestCase {
         swift2d.move(.down, id: "m", withCamera: true)
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
+        // collide with another shape
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [0,1,1,0,0],
+            [1,1,1,0,0],
+        ]
+
+        // collide multiple times (sides) to ensure camera position
+        swift2d.move(.left, id: "m", withCamera: true)
+        swift2d.move(.left, id: "m", withCamera: true)
+        swift2d.move(.left, id: "m", withCamera: true)
+        swift2d.move(.down, id: "m", withCamera: true)
+        swift2d.move(.down, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+
+        // release from collision
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [1,0,1,0,0],
+            [1,1,0,0,0],
+        ]
+
+        swift2d.move(.right, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [0,0,1,0,0],
+            [1,0,0,0,0],
+        ]
+
+        swift2d.move(.up, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+
+        // move near wall, camera stick to bounds
+        expected = [
+            [0,0,0,0,0],
+            [0,1,0,0,0],
+            [0,1,0,0,0],
+            [0,1,0,0,0],
+        ]
+
+
+        swift2d.move(.left, id: "m", withCamera: true)
+        swift2d.move(.left, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // hit wall left
+        expected = [
+            [0,0,0,0,0],
+            [1,0,0,0,0],
+            [1,0,0,0,0],
+            [0,1,0,0,0],
+        ]
+
+
+        swift2d.move(.left, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // off set (col) +2
+        swift2d.move(.left, id: "m", withCamera: true)
+        swift2d.move(.left, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // hit wall left
+        expected = [
+            [0,0,0,0,0],
+            [1,0,0,0,0],
+            [1,1,0,0,0],
+            [1,1,1,0,0],
+        ]
+
+        swift2d.move(.down, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // off set (col) +2
+        // collide shape.. wont add to offset count
+        swift2d.move(.down, id: "m", withCamera: true)
+        swift2d.move(.down, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // off set (col) +2
+        // off set (row) 0
+        // collide shape.. wont add to offset count
+        swift2d.move(.right, id: "m", withCamera: true)
+        swift2d.move(.left, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+
+        expected = [
+            [0,0,0,0,0],
+            [1,0,0,0,0],
+            [1,0,0,0,0],
+            [0,1,0,0,0],
+        ]
+
+
+        // off set (col) +2
+        // off set (row) 0
+        swift2d.move(.up, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+
+        expected = [
+            [0,0,0,0,0],
+            [0,1,0,0,0],
+            [0,1,0,0,0],
+            [0,1,0,0,0],
+        ]
+
+
+        // off set (col) +1
+        // off set (row) 0
+        swift2d.move(.right, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [0,0,1,0,0],
+            [0,1,0,0,0],
+        ]
+
+
+        // off set (col) 0
+        // off set (row) 0
+        swift2d.move(.right, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
     }
 }
