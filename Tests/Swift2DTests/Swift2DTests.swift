@@ -679,7 +679,6 @@ final class Swift2DTests: XCTestCase {
             [0,1,1],
         ]
 
-        // 0 off-camera
         swift2d.moveCamera(.left)
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
@@ -698,10 +697,24 @@ final class Swift2DTests: XCTestCase {
             [1,0,0],
         ]
 
+        // touch wall
         swift2d.moveCamera(.left)
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
+        // +1 offset
         swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // +2 offset
+        swift2d.moveCamera(.left)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // 1 offset
+        swift2d.moveCamera(.right)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
+        // 0 offset
+        swift2d.moveCamera(.right)
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
         expected = [

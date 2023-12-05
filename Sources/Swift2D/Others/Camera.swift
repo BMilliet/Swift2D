@@ -9,6 +9,7 @@ public class Camera {
     private var offsetCol: Int = 0
 
     public var getResolution: Resolution { resolution }
+    public var getCurrentOffset: (Int, Int) { (offsetCol, offsetRow) }
 
     public init(topLeft: Point, bottomRight: Point, maxRow: Int, maxCol: Int) {
         self.resolution = Resolution(topLeft: topLeft, bottomRight: bottomRight)
@@ -32,7 +33,7 @@ public class Camera {
         switch move {
         case .left:
             if topL.column <= 0 {
-                if abs(offsetCol) <= offsetLimitCol {
+                if abs(offsetCol) >= offsetLimitCol {
                     offsetCol -= 1
                 }
                 return
@@ -69,5 +70,19 @@ public class Camera {
         }
 
         resolution = Resolution(topLeft: topL, bottomRight: bottomR)
+    }
+
+    private func handleOffset(_ col: Int) -> Bool {
+        if col >= maxCol {
+            if abs(offsetCol) >= offsetLimitCol {
+                offsetCol -= 1
+            }
+            return false
+        }
+        if offsetCol < offsetLimitCol {
+            offsetCol += 1
+            return false
+        }
+        return true
     }
 }
