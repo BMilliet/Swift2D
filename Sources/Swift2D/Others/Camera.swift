@@ -60,29 +60,33 @@ public class Camera {
             topL.column += 1
             bottomR.column += 1
         case .up:
-            if topL.row <= 0 { return }
+            if topL.row <= 0 {
+                if abs(offsetRow) >= offsetLimitRow {
+                    offsetRow -= 1
+                }
+                return
+            }
+            if offsetRow < offsetLimitRow {
+                offsetRow += 1
+                return
+            }
             topL.row -= 1
             bottomR.row -= 1
         case .down:
-            if bottomR.row >= maxRow { return }
+            if bottomR.row >= maxRow {
+                if abs(offsetRow) >= offsetLimitRow {
+                    offsetRow -= 1
+                }
+                return
+            }
+            if offsetRow < offsetLimitRow {
+                offsetRow += 1
+                return
+            }
             topL.row += 1
             bottomR.row += 1
         }
 
         resolution = Resolution(topLeft: topL, bottomRight: bottomR)
-    }
-
-    private func handleOffset(_ col: Int) -> Bool {
-        if col >= maxCol {
-            if abs(offsetCol) >= offsetLimitCol {
-                offsetCol -= 1
-            }
-            return false
-        }
-        if offsetCol < offsetLimitCol {
-            offsetCol += 1
-            return false
-        }
-        return true
     }
 }
