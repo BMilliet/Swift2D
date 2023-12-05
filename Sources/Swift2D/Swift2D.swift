@@ -19,7 +19,11 @@ public final class Swift2D {
     public var getShapes: [String: Swift2DShape] { shapes }
     public var getPoints: [Point: String] { points }
     public var getCamera: Camera? { camera }
-    public func setCamera(_ _camera: Camera) { camera = _camera }
+
+
+    public func createCamera(topLeft: Point, bottomRight: Point) {
+        camera = Camera(topLeft: topLeft, bottomRight: bottomRight, maxRow: canvas.count, maxCol: canvas[0].count)
+    }
 
 
     public func shape(_ id: String) -> Swift2DShape? {
@@ -59,7 +63,15 @@ public final class Swift2D {
     }
 
 
-    public func move(_ move: Move, id: String) throws {
+    public func move(_ option: Move, id: String, withCamera: Bool = false) {
+        guard let move = try? move(option, id) else { return }
+        if move == .none && withCamera {
+            moveCamera(option)
+        }
+    }
+
+
+    private func move(_ move: Move, _ id: String) throws -> CollisionType {
         guard let shape = shapes[id] else {
             throw Swift2DError.invalid(description: "could not find shape with id \(id)")
         }
@@ -91,10 +103,11 @@ public final class Swift2D {
             save(shape: shape)
             merge(shape, column: shape.column, row: shape.row)
             logger.log("\(stringMatrix(canvasHandler.canvas))")
-            return
+            return collision.type
         }
 
         merge(shape, column: shape.column, row: shape.row)
+        return collision.type
     }
 
 

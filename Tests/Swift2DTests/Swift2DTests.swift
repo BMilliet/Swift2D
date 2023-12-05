@@ -37,7 +37,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
         ]
-        try swift2d.move(.left, id: "m")
+        swift2d.move(.left, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -48,7 +48,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
         ]
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -59,7 +59,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
         ]
-        try swift2d.move(.up, id: "m")
+        swift2d.move(.up, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -70,7 +70,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0,0,0,0],
             [0,0,0,0,0,0],
         ]
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -105,10 +105,10 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.canvas)
 
-        try swift2d.move(.left, id: "m")
+        swift2d.move(.left, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
-        try swift2d.move(.up, id: "m")
+        swift2d.move(.up, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
 
@@ -116,9 +116,9 @@ final class Swift2DTests: XCTestCase {
             [0,0],
             [1,0]
         ]
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
 
@@ -126,9 +126,9 @@ final class Swift2DTests: XCTestCase {
             [0,0],
             [0,1]
         ]
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
     }
 
@@ -157,7 +157,7 @@ final class Swift2DTests: XCTestCase {
             [1,0,0],
             [0,0,0],
         ]
-        try swift2d.move(.left, id: "m")
+        swift2d.move(.left, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -165,24 +165,24 @@ final class Swift2DTests: XCTestCase {
             [0,0,0],
             [0,0,0],
         ]
-        try swift2d.move(.left, id: "m")
-        XCTAssertEqual(expected, swift2d.canvas)
-
-        expected = [
-            [1,1,0],
-            [1,1,0],
-            [0,0,0],
-        ]
-        try swift2d.move(.right, id: "m")
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.left, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
             [1,1,0],
+            [1,1,0],
+            [0,0,0],
+        ]
+        swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
+        XCTAssertEqual(expected, swift2d.canvas)
+
+        expected = [
+            [1,1,0],
             [0,0,0],
             [0,0,0],
         ]
-        try swift2d.move(.up, id: "m")
+        swift2d.move(.up, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -190,7 +190,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0],
             [0,0,0],
         ]
-        try swift2d.move(.up, id: "m")
+        swift2d.move(.up, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -198,10 +198,10 @@ final class Swift2DTests: XCTestCase {
             [0,0,0],
             [1,1,0],
         ]
-        try swift2d.move(.down, id: "m")
-        try swift2d.move(.down, id: "m")
-        try swift2d.move(.down, id: "m")
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -209,8 +209,8 @@ final class Swift2DTests: XCTestCase {
             [0,0,0],
             [0,0,1],
         ]
-        try swift2d.move(.right, id: "m")
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
     }
 
@@ -256,7 +256,7 @@ final class Swift2DTests: XCTestCase {
             [0,0,0,0,1,0],
             [0,0,0,1,1,0],
         ]
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(.none, shapeM.lastCollision)
         XCTAssertEqual(.none, shapeN.lastCollision)
         XCTAssertTrue(shapeM.lastCollidedShape.isEmpty)
@@ -264,13 +264,13 @@ final class Swift2DTests: XCTestCase {
         XCTAssertNil(shapeM.lastCollidedPoint)
         XCTAssertNil(shapeN.lastCollidedPoint)
 
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(.none, shapeM.lastCollision)
         XCTAssertEqual(.none, shapeN.lastCollision)
         XCTAssertTrue(shapeM.lastCollidedShape.isEmpty)
         XCTAssertTrue(shapeN.lastCollidedShape.isEmpty)
 
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
         XCTAssertEqual(.anotherShape, shapeM.lastCollision)
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
         XCTAssertEqual("n", shapeM.lastCollidedShape)
@@ -280,7 +280,7 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 1, row: 0), shapeN.lastRelativeCollisionPoint)
         XCTAssertEqual(expected, swift2d.canvas)
 
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
         XCTAssertEqual(expected, swift2d.canvas)
 
         expected = [
@@ -291,9 +291,9 @@ final class Swift2DTests: XCTestCase {
             [0,1,0,0,1,0],
             [0,0,0,1,1,0],
         ]
-        try swift2d.move(.left, id: "m")
-        try swift2d.move(.left, id: "m")
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.left, id: "m")
+        swift2d.move(.left, id: "m")
+        swift2d.move(.down, id: "m")
 
         XCTAssertEqual(.none, shapeM.lastCollision)
         XCTAssertEqual(.none, shapeN.lastCollision)
@@ -305,7 +305,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.canvas)
 
-        try swift2d.move(.left, id: "m")
+        swift2d.move(.left, id: "m")
 
         XCTAssertEqual(.leftWall, shapeM.lastCollision)
         XCTAssertEqual(.none, shapeN.lastCollision)
@@ -324,8 +324,8 @@ final class Swift2DTests: XCTestCase {
             [0,0,1,0,1,0],
             [0,0,0,1,1,0],
         ]
-        try swift2d.move(.right, id: "m")
-        try swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
+        swift2d.move(.right, id: "m")
 
         XCTAssertEqual(.anotherShape, shapeM.lastCollision)
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
@@ -345,8 +345,8 @@ final class Swift2DTests: XCTestCase {
             [0,1,1,1,1,0],
             [0,0,1,1,1,0],
         ]
-        try swift2d.move(.down, id: "m")
-        try swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
+        swift2d.move(.down, id: "m")
 
         XCTAssertEqual(.anotherShape, shapeM.lastCollision)
         XCTAssertEqual(.anotherShape, shapeN.lastCollision)
@@ -396,8 +396,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertNil(shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.right, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.right, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -417,8 +417,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 0, row: 0), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.down, id: "p1")
-        try swift2d.move(.right, id: "p1")
+        swift2d.move(.down, id: "p1")
+        swift2d.move(.right, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -438,8 +438,8 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 0, row: 1), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.down, id: "p1")
-        try swift2d.move(.right, id: "p1")
+        swift2d.move(.down, id: "p1")
+        swift2d.move(.right, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -459,10 +459,10 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 0, row: 2), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.down, id: "p1")
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.up, id: "p1")
+        swift2d.move(.down, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.up, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -482,9 +482,9 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 1, row: 2), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.up, id: "p1")
-        try swift2d.move(.up, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.up, id: "p1")
+        swift2d.move(.up, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -504,11 +504,11 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 2, row: 1), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.down, id: "p1")
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.up, id: "p1")
+        swift2d.move(.down, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.up, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -528,11 +528,11 @@ final class Swift2DTests: XCTestCase {
         XCTAssertEqual(Point(column: 5, row: 2), shapeA.lastRelativeCollisionPoint)
 
 
-        try swift2d.move(.right, id: "p1")
-        try swift2d.move(.up, id: "p1")
-        try swift2d.move(.up, id: "p1")
-        try swift2d.move(.up, id: "p1")
-        try swift2d.move(.left, id: "p1")
+        swift2d.move(.right, id: "p1")
+        swift2d.move(.up, id: "p1")
+        swift2d.move(.up, id: "p1")
+        swift2d.move(.up, id: "p1")
+        swift2d.move(.left, id: "p1")
 
         expected = [
             [0,0,0,0,0,0,0,0,0,0],
@@ -553,7 +553,7 @@ final class Swift2DTests: XCTestCase {
     }
 
 
-    func test_canvas_cut() throws {
+    func test_camera() throws {
 
         let swift2d = Swift2D(columns: 6, rows: 6)
 
@@ -592,7 +592,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.canvas)
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2), maxRow: 5, maxCol: 5))
+        swift2d.createCamera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 3, row: 2))
 
         expected = [
             [0,0,1],
@@ -601,7 +601,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5), maxRow: 5, maxCol: 5))
+        swift2d.createCamera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 4, row: 5))
 
         expected = [
             [0,0,1,0],
@@ -613,7 +613,7 @@ final class Swift2DTests: XCTestCase {
 
         XCTAssertEqual(expected, swift2d.cameraFrame())
 
-        swift2d.setCamera(Camera(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4), maxRow: 5, maxCol: 5))
+        swift2d.createCamera(topLeft: .init(column: 2, row: 2), bottomRight: .init(column: 4, row: 4))
 
         expected = [
             [0,0,0],
@@ -762,5 +762,62 @@ final class Swift2DTests: XCTestCase {
 
         swift2d.moveCamera(.down)
         XCTAssertEqual(expected, swift2d.cameraFrame())
+    }
+
+
+    func test_move_with_camera() throws {
+
+        let swift2d = Swift2D(columns: 7, rows: 7)
+
+        let matrix1 = [
+            [1],
+            [1]
+        ]
+
+
+        let matrix2 = [
+            [0,1,0],
+            [1,1,1]
+        ]
+
+        let shapeM = Swift2DShape(id: "m", matrix: matrix1, column: 3, row: 2)
+        let shapeN = Swift2DShape(id: "n", matrix: matrix2, column: 0, row: 4)
+
+        try swift2d.addToCanvas(shape: shapeM)
+        try swift2d.addToCanvas(shape: shapeN)
+
+        var expected = [
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,1,0,0,0],
+            [0,0,0,1,0,0,0],
+            [0,1,0,0,0,0,0],
+            [1,1,1,0,0,0,0],
+            [0,0,0,0,0,0,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.canvas)
+
+        swift2d.createCamera(topLeft: .init(column: 1, row: 1), bottomRight: .init(column: 5, row: 4))
+
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [0,0,1,0,0],
+            [1,0,0,0,0],
+        ]
+
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+        
+        expected = [
+            [0,0,0,0,0],
+            [0,0,1,0,0],
+            [1,0,1,0,0],
+            [1,1,0,0,0],
+        ]
+
+        swift2d.move(.down, id: "m", withCamera: true)
+        XCTAssertEqual(expected, swift2d.cameraFrame())
+
     }
 }
