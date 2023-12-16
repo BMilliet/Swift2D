@@ -22,7 +22,7 @@ public final class Swift2D {
 
 
     public func createCamera(topLeft: Point, bottomRight: Point) {
-        camera = Camera(topLeft: topLeft, bottomRight: bottomRight, maxRow: canvas.count, maxCol: canvas[0].count)
+        camera = Camera(topLeft: topLeft, bottomRight: bottomRight, maxRow: canvas.count-1, maxCol: canvas[0].count-1)
     }
 
 
@@ -45,7 +45,7 @@ public final class Swift2D {
         camera?.move(move)
     }
 
-    
+
     public func cameraFrame() -> [[Int]]? {
         guard let camera = camera else { return nil }
         return canvasHandler.getCanvasSlice(with: camera.getResolution)
